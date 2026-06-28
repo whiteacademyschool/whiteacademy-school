@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const lenis = new Lenis({
-  duration: 1.1,
+  duration: 1.15,
   smoothWheel: true,
   lerp: 0.08,
 });
@@ -18,46 +18,57 @@ function raf(time) {
 
 requestAnimationFrame(raf);
 
-document.querySelectorAll('section, .strip-card, .resource-grid article, .activity-grid article, .testimonial-grid article').forEach((el) => {
-  el.classList.add('reveal');
+gsap.to('.reveal', {
+  opacity: 1,
+  y: 0,
+  duration: 0.9,
+  ease: 'power3.out',
+  stagger: 0.08,
+  scrollTrigger: {
+    trigger: 'body',
+    start: 'top 85%',
+  },
 });
 
-gsap.utils.toArray('.reveal').forEach((el) => {
-  gsap.to(el, {
+document.querySelectorAll('.section .reveal').forEach((element) => {
+  gsap.to(element, {
     opacity: 1,
     y: 0,
-    duration: 0.85,
+    duration: 0.9,
     ease: 'power3.out',
     scrollTrigger: {
-      trigger: el,
+      trigger: element,
       start: 'top 86%',
     },
   });
 });
 
-gsap.to('.kid-one', {
+gsap.to('.main-card', {
   y: -18,
-  rotate: -2,
   duration: 3,
   repeat: -1,
   yoyo: true,
   ease: 'sine.inOut',
 });
 
-gsap.to('.kid-two', {
+gsap.to('.card-a', {
   y: 18,
-  rotate: 2,
   duration: 3.4,
   repeat: -1,
   yoyo: true,
   ease: 'sine.inOut',
 });
 
-gsap.to('.float-card', {
+gsap.to('.card-b', {
   y: -14,
-  duration: 2.8,
+  duration: 3.1,
   repeat: -1,
   yoyo: true,
-  stagger: .4,
   ease: 'sine.inOut',
+});
+
+const header = document.querySelector('[data-header]');
+
+window.addEventListener('scroll', () => {
+  header.classList.toggle('is-scrolled', window.scrollY > 24);
 });
