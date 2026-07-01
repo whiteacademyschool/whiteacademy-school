@@ -74,6 +74,12 @@
     </div>
 
     <a class="apply-btn" href="/admission-process.html">Apply Now →</a>
+
+    <button class="mobile-menu-btn" type="button" aria-label="Open navigation menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </nav>
 
@@ -152,7 +158,16 @@
       </div>
     </section>
 
-    <section class="features">
+    <section class="features mobile-collapsible" data-mobile-section="features">
+      <div class="container">
+        <button class="mobile-section-toggle" type="button" aria-expanded="false">
+          <span>
+            <small>Why White Academy</small>
+            Enhanced Learning & Student Growth
+          </span>
+          <b>+</b>
+        </button>
+      </div>
       <div class="container feature-grid">
         <article>
           <div class="feature-image-icon">
@@ -192,12 +207,19 @@
       </div>
     </section>
 
-    <section id="academics" class="programmes section">
+    <section id="academics" class="programmes section mobile-collapsible" data-mobile-section="programmes">
       <div class="container">
         <div class="section-title">
           <p>Our Programmes</p>
           <h2>Learning Pathways for Every Stage</h2>
         </div>
+        <button class="mobile-section-toggle" type="button" aria-expanded="false">
+          <span>
+            <small>Our Programmes</small>
+            Learning Pathways for Every Stage
+          </span>
+          <b>+</b>
+        </button>
         <div class="programme-grid">
           <article>
             <div class="programme-card-top">
@@ -205,6 +227,7 @@
               <img src="/src/assets/icons/programmes/kindergarten.svg" alt="Kindergarten learning icon" class="programme-icon" />
             </div>
             <h3>Kindergarten</h3>
+            <button class="programme-mobile-toggle" type="button" aria-expanded="false">+</button>
             <p>Playful early learning with language, creativity and social development.</p>
           </article>
 
@@ -214,6 +237,7 @@
               <img src="/src/assets/icons/programmes/primary.svg" alt="Primary school learning icon" class="programme-icon" />
             </div>
             <h3>Primary</h3>
+            <button class="programme-mobile-toggle" type="button" aria-expanded="false">+</button>
             <p>Advanced curriculum that builds strong basics and good habits.</p>
           </article>
 
@@ -223,6 +247,7 @@
               <img src="/src/assets/icons/programmes/middle.svg" alt="Middle school concept learning icon" class="programme-icon" />
             </div>
             <h3>Middle</h3>
+            <button class="programme-mobile-toggle" type="button" aria-expanded="false">+</button>
             <p>Concept clarity, discipline, communication and leadership.</p>
           </article>
 
@@ -232,6 +257,7 @@
               <img src="/src/assets/icons/programmes/secondary.svg" alt="Secondary school achievement icon" class="programme-icon" />
             </div>
             <h3>Secondary</h3>
+            <button class="programme-mobile-toggle" type="button" aria-expanded="false">+</button>
             <p>Exam-focused preparation with mentoring and performance tracking.</p>
           </article>
         </div></div>
