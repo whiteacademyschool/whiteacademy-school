@@ -15,12 +15,12 @@ select id from auth.users
 where email = 'ADMIN_EMAIL_HERE';
 ```
 
-5. Copy the **Project URL** and **anon public key** from **Project Settings → API**.
+5. Copy the **Project URL** and **Publishable key** from the project's **Connect** dialog or **Settings → API Keys**.
 6. In Vercel, open the White Academy project → **Settings → Environment Variables** and add:
 
 ```text
 VITE_SUPABASE_URL
-VITE_SUPABASE_ANON_KEY
+VITE_SUPABASE_PUBLISHABLE_KEY
 ```
 
 7. Apply the variables to Production, Preview and Development, then redeploy.
@@ -38,7 +38,7 @@ VITE_SUPABASE_ANON_KEY
 
 ## Security
 
-- The Supabase anon key is safe to expose in the browser.
+- The Supabase publishable key is designed for public browser applications. Never use the secret or service-role key here.
 - Row Level Security permits public reads only.
 - Only the user listed in `cms_admins` can create, update or delete content and upload files.
 - The admin page is marked `noindex` and requires Supabase authentication.

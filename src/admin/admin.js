@@ -149,7 +149,7 @@ function renderSetup() {
         <ol>
           <li>Create a Supabase project.</li>
           <li>Run <code>supabase/cms.sql</code> in the SQL editor.</li>
-          <li>Add <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> in Vercel.</li>
+          <li>Add <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_PUBLISHABLE_KEY</code> in Vercel.</li>
           <li>Redeploy the project.</li>
         </ol>
         <a class="primary-action" href="/">Return to website</a>
