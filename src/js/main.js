@@ -1,4 +1,7 @@
 import '../css/styles.css';
+import { initCmsRuntime } from '../cms/runtime.js';
+
+initCmsRuntime();
 
 // MOBILE MENU FINAL FIX START
 document.addEventListener("DOMContentLoaded", () => {
