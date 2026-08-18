@@ -3,6 +3,18 @@ import { initCmsRuntime } from '../cms/runtime.js';
 
 initCmsRuntime();
 
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.file-control input[type="file"]').forEach((input) => {
+    input.addEventListener("change", () => {
+      const label = input.closest(".file-control");
+      const fileName = input.files?.[0]?.name;
+      const status = label?.querySelector("strong");
+
+      if (status) status.textContent = fileName || "Upload File +";
+    });
+  });
+});
+
 // MOBILE MENU FINAL FIX START
 document.addEventListener("DOMContentLoaded", () => {
   const menuButton = document.querySelector(".mobile-menu-btn");

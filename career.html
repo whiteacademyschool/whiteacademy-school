@@ -39,14 +39,17 @@
           <p>We are always looking for exceptional people who will enrich our school environment. If you think you have the experience and attitude to make a critical difference, please do apply.</p>
         </article>
 
-        <form class="career-form">
+        <form class="career-form" action="https://formsubmit.co/whiteschoolacademyweb@gmail.com" method="POST" enctype="multipart/form-data">
+          <input type="hidden" name="_subject" value="New Career Application — White Academy">
+          <input type="hidden" name="_template" value="table">
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="form-honeypot">
           <h3>Apply Now</h3>
-          <input placeholder="Full Name *">
-          <input placeholder="Phone">
-          <input placeholder="Email *">
-          <textarea placeholder="Write Your Message"></textarea>
-          <div class="file-control"><span>Resume</span><strong>Upload File +</strong></div>
-          <button type="button">Submit Application →</button>
+          <input type="text" name="Full Name" placeholder="Full Name *" autocomplete="name" required>
+          <input type="tel" name="Phone" placeholder="Phone" autocomplete="tel" inputmode="tel">
+          <input type="email" name="email" placeholder="Email *" autocomplete="email" required>
+          <textarea name="Message" placeholder="Write Your Message"></textarea>
+          <label class="file-control"><span>Resume</span><strong>Upload File +</strong><input type="file" name="Resume" accept=".pdf,.doc,.docx"></label>
+          <button type="submit">Submit Application →</button>
         </form>
       </div>
     </section>

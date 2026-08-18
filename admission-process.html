@@ -24,13 +24,16 @@
           <h1>Admission process and guidelines.</h1>
           <p>Being one of the best CBSE schools in Electronic City surroundings, we not only focus on academic excellence, but also extend learning beyond the classroom.</p>
         </div>
-        <form class="admission-card-form">
+        <form class="admission-card-form" action="https://formsubmit.co/whiteschoolacademyweb@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="New Admission Process Enquiry — White Academy">
+          <input type="hidden" name="_template" value="table">
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="form-honeypot">
           <h3>Admissions Open</h3>
-          <input placeholder="Parent Name*">
-          <input placeholder="Phone Number*">
-          <input placeholder="Email Address*">
-          <select><option>Select Grade*</option><option>Nursery</option><option>LKG</option><option>UKG</option><option>Grade 1</option></select>
-          <button type="button">Submit Enquiry →</button>
+          <input type="text" name="Parent Name" placeholder="Parent Name*" autocomplete="name" required>
+          <input type="tel" name="Phone Number" placeholder="Phone Number*" autocomplete="tel" inputmode="tel" required>
+          <input type="email" name="email" placeholder="Email Address*" autocomplete="email" required>
+          <select name="Grade" required><option value="" selected disabled>Select Grade*</option><option>Nursery</option><option>LKG</option><option>UKG</option><option>Grade 1</option></select>
+          <button type="submit">Submit Enquiry →</button>
         </form>
       </div>
     </section>

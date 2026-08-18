@@ -41,11 +41,14 @@
           <div class="social-row"><span>f</span><span>x</span><span>◎</span><span>in</span></div>
         </div>
 
-        <form class="premium-form">
-          <input placeholder="Full Name">
-          <div class="form-two"><input placeholder="Email"><input placeholder="Phone"></div>
-          <textarea placeholder="Message"></textarea>
-          <button type="button">Submit Enquiry →</button>
+        <form class="premium-form" action="https://formsubmit.co/whiteschoolacademyweb@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="New Contact Enquiry — White Academy">
+          <input type="hidden" name="_template" value="table">
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="form-honeypot">
+          <input type="text" name="Full Name" placeholder="Full Name" autocomplete="name" required>
+          <div class="form-two"><input type="email" name="email" placeholder="Email" autocomplete="email" required><input type="tel" name="Phone" placeholder="Phone" autocomplete="tel" inputmode="tel" required></div>
+          <textarea name="Message" placeholder="Message" required></textarea>
+          <button type="submit">Submit Enquiry →</button>
         </form>
       </div>
     </section>

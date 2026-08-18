@@ -138,21 +138,24 @@
             />
           </div>
 
-          <form id="admission" class="lead-form">
+          <form id="admission" class="lead-form" action="https://formsubmit.co/whiteschoolacademyweb@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="New Homepage Admission Enquiry — White Academy" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="form-honeypot" />
             <h3>Admissions Open</h3>
             <p>Enquire now and our team will get in touch with you.</p>
-            <input placeholder="Parent Name*" />
-            <input placeholder="Phone Number*" />
-            <input placeholder="Email Address*" />
-            <select>
-              <option>Select Grade*</option>
+            <input type="text" name="Parent Name" placeholder="Parent Name*" autocomplete="name" required />
+            <input type="tel" name="Phone Number" placeholder="Phone Number*" autocomplete="tel" inputmode="tel" required />
+            <input type="email" name="email" placeholder="Email Address*" autocomplete="email" required />
+            <select name="Grade" required>
+              <option value="" selected disabled>Select Grade*</option>
               <option>Kindergarten</option>
               <option>Primary</option>
               <option>Middle</option>
               <option>Secondary</option>
             </select>
-            <textarea placeholder="Message (Optional)"></textarea>
-            <button type="button">Submit Enquiry →</button>
+            <textarea name="Message" placeholder="Message (Optional)"></textarea>
+            <button type="submit">Submit Enquiry →</button>
           </form>
         </div>
       </div>
