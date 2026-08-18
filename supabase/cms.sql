@@ -156,3 +156,5 @@ $$;
 -- After creating the single admin user in Authentication > Users, run:
 -- insert into public.cms_admins (user_id)
 -- select id from auth.users where email = 'admin@your-school-domain.com';
+
+-- Then run supabase/media-centre.sql to enable event albums and news publishing.

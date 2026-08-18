@@ -254,7 +254,7 @@ function renderDashboard() {
         <div class="sidebar-brand">
           <span>WA</span><div><strong>White Academy</strong><small>Admin panel</small></div>
         </div>
-        <div class="sidebar-scroll">${pageNavigationMarkup()}</div>
+        <div class="sidebar-scroll"><div class="nav-group"><p>Media Centre</p><a class="page-link media-nav-link" href="/media-admin.html#events"><span>E</span>Event Albums</a><a class="page-link media-nav-link" href="/media-admin.html#news"><span>N</span>News & Updates</a></div>${pageNavigationMarkup()}</div>
         <div class="sidebar-user">
           <div>${escapeHtml(state.user?.email?.slice(0, 1).toUpperCase() || 'A')}</div>
           <p><strong>Administrator</strong><small>${escapeHtml(state.user?.email || '')}</small></p>

@@ -24,7 +24,8 @@ VITE_SUPABASE_PUBLISHABLE_KEY
 ```
 
 7. Apply the variables to Production, Preview and Development, then redeploy.
-8. Open `https://whiteacademy-school.vercel.app/admin.html` and sign in.
+8. Run the complete `supabase/media-centre.sql` file to enable event albums and news.
+9. Open `https://whiteacademy-school.vercel.app/admin.html` and sign in.
 
 ## What the administrator can manage
 
@@ -35,6 +36,18 @@ VITE_SUPABASE_PUBLISHABLE_KEY
 - Individual field restoration
 - Full-page restoration
 - Live updates without a Vercel redeployment
+- Event albums with bulk photo uploads
+- News and updates as text-only posts or posts with photos
+- Draft and published visibility for albums and posts
+
+The Media Centre is available at `/media-admin.html`. It uses the same administrator login. Uploaded JPG and PNG photos are automatically resized and converted to optimized WebP files before being stored in the existing `cms-media` Supabase Storage bucket.
+
+Public Media Centre pages:
+
+- `/gallery.html`
+- `/gallery-event.html?id=ALBUM_ID`
+- `/news.html`
+- `/news-detail.html?id=POST_ID`
 
 ## Security
 
