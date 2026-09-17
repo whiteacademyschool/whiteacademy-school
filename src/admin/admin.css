@@ -446,3 +446,16 @@ button { cursor: pointer; }
     width: 100%;
   }
 }
+
+
+.image-preview__empty {
+  width: 100%;
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  color: var(--muted);
+  background: linear-gradient(145deg, #f1f5f3, #fafcfb);
+  font-size: 12px;
+  font-weight: 700;
+}
