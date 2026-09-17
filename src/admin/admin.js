@@ -388,7 +388,7 @@ function fieldCard(field) {
   if (field.type === 'image') {
     control = `
       <div class="image-editor">
-        <div class="image-preview"><img src="${escapeHtml(record.value)}" alt="${escapeHtml(record.metadata?.alt || '')}" /></div>
+        <div class="image-preview">${record.value ? `<img src="${escapeHtml(record.value)}" alt="${escapeHtml(record.metadata?.alt || '')}" />` : '<div class="image-preview__empty">No photo uploaded</div>'}</div>
         <div class="image-controls">
           <label>Alternative text<input data-field-value="alt" value="${escapeHtml(record.metadata?.alt || '')}" placeholder="Describe this image" /></label>
           <label class="upload-action">Replace photo<input data-image-upload type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml" /></label>
