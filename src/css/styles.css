@@ -6063,3 +6063,12 @@ body[data-media-page] .nav-links { gap: 18px; font-size: 12px; }
 @keyframes staff-spin {
   to { transform: rotate(360deg); }
 }
+
+
+.asset-slot.cms-image-slot {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-style: solid;
+  color: transparent;
+}
