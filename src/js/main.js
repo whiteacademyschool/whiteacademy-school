@@ -3,6 +3,31 @@ import { initCmsRuntime } from '../cms/runtime.js';
 
 initCmsRuntime();
 
+
+const ensureMediaCentreNavigation = () => {
+  const navLinks = document.querySelector('.nav-links');
+  if (!navLinks || navLinks.querySelector('[data-media-centre-nav]')) return;
+
+  const mediaNavigation = document.createElement('div');
+  mediaNavigation.className = 'nav-dropdown';
+  mediaNavigation.setAttribute('data-media-centre-nav', '');
+  mediaNavigation.innerHTML = `
+    <a href="/gallery.html">Media Centre ▾</a>
+    <div class="dropdown-menu">
+      <a href="/gallery.html">Event Gallery</a>
+      <a href="/news.html">News &amp; Updates</a>
+    </div>
+  `;
+
+  const contactNavigation = [...navLinks.children].find((item) =>
+    item.querySelector?.(':scope > a[href="/contact.html"]')
+  );
+
+  navLinks.insertBefore(mediaNavigation, contactNavigation || null);
+};
+
+document.addEventListener('DOMContentLoaded', ensureMediaCentreNavigation);
+
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('.file-control input[type="file"]').forEach((input) => {
     input.addEventListener("change", () => {
