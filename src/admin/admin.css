@@ -235,3 +235,25 @@ button { cursor: pointer; }
   .media-form__actions button { width: 100%; }
   .existing-media-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+
+
+.admin-shell--embedded {
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.admin-shell--embedded .admin-sidebar {
+  display: none;
+}
+
+.admin-shell--embedded .admin-main {
+  min-width: 0;
+}
+
+.admin-module-frame {
+  width: 100%;
+  min-height: calc(100vh - 86px);
+  border: 0;
+  background: #f7f8fc;
+  display: block;
+}
