@@ -1,32 +1,12 @@
 import '../css/styles.css';
 import { initCmsRuntime } from '../cms/runtime.js';
+import { cmsClient, cmsConfigured } from '../cms/client.js';
+import { DEFAULT_NAVIGATION, NAVIGATION_CONTENT_KEY, NAVIGATION_PAGE_PATH, renderPrimaryNavigation } from '../cms/navigation.js';
 
 initCmsRuntime();
 
 
-const ensureMediaCentreNavigation = () => {
-  const navLinks = document.querySelector('.nav-links');
-  if (!navLinks || navLinks.querySelector('[data-media-centre-nav]')) return;
 
-  const mediaNavigation = document.createElement('div');
-  mediaNavigation.className = 'nav-dropdown';
-  mediaNavigation.setAttribute('data-media-centre-nav', '');
-  mediaNavigation.innerHTML = `
-    <a href="/gallery.html">Media Centre ▾</a>
-    <div class="dropdown-menu">
-      <a href="/gallery.html">Event Gallery</a>
-      <a href="/news.html">News &amp; Updates</a>
-    </div>
-  `;
-
-  const contactNavigation = [...navLinks.children].find((item) =>
-    item.querySelector?.(':scope > a[href="/contact.html"]')
-  );
-
-  navLinks.insertBefore(mediaNavigation, contactNavigation || null);
-};
-
-document.addEventListener('DOMContentLoaded', ensureMediaCentreNavigation);
 
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('.file-control input[type="file"]').forEach((input) => {
@@ -40,66 +20,91 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// MOBILE MENU FINAL FIX START
+// GLOBAL NAVIGATION AND MOBILE MENU
 document.addEventListener("DOMContentLoaded", () => {
   const menuButton = document.querySelector(".mobile-menu-btn");
   const navLinks = document.querySelector(".nav-links");
-  const dropdowns = document.querySelectorAll(".nav-dropdown");
+  if (!navLinks) return;
 
-  if (!menuButton || !navLinks) return;
+  const applyNavigation = (items) => {
+    navLinks.innerHTML = renderPrimaryNavigation(items, window.location.pathname);
+  };
 
   const closeMenu = () => {
     document.body.classList.remove("menu-open");
-    menuButton.setAttribute("aria-expanded", "false");
-    dropdowns.forEach((dropdown) => dropdown.classList.remove("open"));
+    menuButton?.setAttribute("aria-expanded", "false");
+    navLinks.querySelectorAll(".nav-dropdown").forEach((dropdown) => dropdown.classList.remove("open"));
   };
 
-  menuButton.addEventListener("click", () => {
+  applyNavigation(DEFAULT_NAVIGATION);
+
+  if (cmsConfigured && cmsClient) {
+    cmsClient
+      .from("cms_content")
+      .select("value")
+      .eq("page_path", NAVIGATION_PAGE_PATH)
+      .eq("content_key", NAVIGATION_CONTENT_KEY)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (!data?.value) return;
+        try {
+          applyNavigation(JSON.parse(data.value));
+        } catch {
+          applyNavigation(DEFAULT_NAVIGATION);
+        }
+      });
+
+    cmsClient
+      .channel("cms-global-navigation")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "cms_content",
+          filter: `page_path=eq.${NAVIGATION_PAGE_PATH}`,
+        },
+        (payload) => {
+          if (payload.eventType === "DELETE" || payload.new?.content_key !== NAVIGATION_CONTENT_KEY) {
+            if (payload.old?.content_key === NAVIGATION_CONTENT_KEY) applyNavigation(DEFAULT_NAVIGATION);
+            return;
+          }
+          try {
+            applyNavigation(JSON.parse(payload.new.value));
+          } catch {
+            applyNavigation(DEFAULT_NAVIGATION);
+          }
+        },
+      )
+      .subscribe();
+  }
+
+  menuButton?.addEventListener("click", () => {
     const isOpen = document.body.classList.toggle("menu-open");
     menuButton.setAttribute("aria-expanded", String(isOpen));
+    if (!isOpen) navLinks.querySelectorAll(".nav-dropdown").forEach((dropdown) => dropdown.classList.remove("open"));
+  });
 
-    if (!isOpen) {
-      dropdowns.forEach((dropdown) => dropdown.classList.remove("open"));
+  navLinks.addEventListener("click", (event) => {
+    const trigger = event.target.closest(".nav-dropdown > a");
+    if (trigger && window.innerWidth <= 980) {
+      event.preventDefault();
+      const dropdown = trigger.closest(".nav-dropdown");
+      navLinks.querySelectorAll(".nav-dropdown").forEach((item) => {
+        if (item !== dropdown) item.classList.remove("open");
+      });
+      dropdown.classList.toggle("open");
+      return;
     }
-  });
 
-  dropdowns.forEach((dropdown) => {
-    const trigger = dropdown.querySelector(":scope > a");
-
-    if (!trigger) return;
-
-    trigger.addEventListener("click", (event) => {
-      if (window.innerWidth <= 980) {
-        event.preventDefault();
-
-        dropdowns.forEach((item) => {
-          if (item !== dropdown) item.classList.remove("open");
-        });
-
-        dropdown.classList.toggle("open");
-      }
-    });
-  });
-
-  navLinks.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      if (window.innerWidth <= 980 && !link.closest(".nav-dropdown")) {
-        closeMenu();
-      }
-
-      if (window.innerWidth <= 980 && link.closest(".dropdown-menu")) {
-        closeMenu();
-      }
-    });
+    if (window.innerWidth <= 980 && event.target.closest("a")) closeMenu();
   });
 
   window.addEventListener("resize", () => {
-    if (window.innerWidth > 980) {
-      closeMenu();
-    }
+    if (window.innerWidth > 980) closeMenu();
   });
 });
-// MOBILE MENU FINAL FIX END
+// GLOBAL NAVIGATION END
 
 // MOBILE SECTION ACCORDION FIX START
 document.addEventListener("DOMContentLoaded", () => {
