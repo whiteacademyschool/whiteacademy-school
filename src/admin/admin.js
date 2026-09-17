@@ -63,12 +63,13 @@ const state = {
   fields: [],
   overrides: new Map(),
   drafts: new Map(),
-  filter: 'all',
+  filter: 'image',
   search: '',
   loadingPage: false,
 };
 
 const app = document.querySelector('#admin-app');
+const embedded = new URLSearchParams(location.search).has('embedded');
 
 function escapeHtml(value = '') {
   return String(value)
@@ -166,7 +167,7 @@ function renderLogin(message = '') {
           <div>
             <p class="eyebrow">CONTENT MANAGEMENT</p>
             <h1>Every page.<br />One secure place.</h1>
-            <p>Update school information, page content, photos, links and search metadata without changing the website design.</p>
+            <p>Replace page photos without touching the website layout or written content.</p>
           </div>
           <small>Authorized administrator access only</small>
         </div>
@@ -249,7 +250,7 @@ function pageNavigationMarkup() {
 
 function renderDashboard() {
   app.innerHTML = `
-    <div class="admin-shell">
+    <div class="admin-shell ${embedded ? 'admin-shell--embedded' : ''}">
       <aside class="admin-sidebar">
         <div class="sidebar-brand">
           <span>WA</span><div><strong>White Academy</strong><small>Admin panel</small></div>
@@ -272,15 +273,13 @@ function renderDashboard() {
           </div>
         </header>
         <section class="editor-toolbar">
-          <div class="filter-tabs" role="tablist">
-            <button data-filter="all" class="is-active">All</button>
-            <button data-filter="text">Text</button>
-            <button data-filter="image">Photos</button>
-            <button data-filter="link">Links</button>
-            <button data-filter="seo">SEO</button>
-          </div>
-          <label class="editor-search">⌕<input id="field-search" type="search" placeholder="Search this page…" /></label>
-          <button id="reset-page" class="danger-link">Reset page</button>
+          <label class="page-picker">Choose page
+            <select id="page-select">
+              ${ALL_PAGES.map((page) => `<option value="${escapeHtml(page.path)}" ${page.path === state.page.path ? 'selected' : ''}>${escapeHtml(page.group)} — ${escapeHtml(page.label)}</option>`).join('')}
+            </select>
+          </label>
+          <label class="editor-search">⌕<input id="field-search" type="search" placeholder="Find a photo…" /></label>
+          <button id="reset-page" class="danger-link">Restore page photos</button>
         </section>
         <section id="editor-content" class="editor-content"></section>
       </main>
@@ -312,6 +311,18 @@ function bindDashboardEvents() {
     });
   });
 
+  document.querySelector('#page-select')?.addEventListener('change', async (event) => {
+    if (state.drafts.size && !window.confirm('Discard unsaved changes and open another page?')) {
+      event.target.value = state.page.path;
+      return;
+    }
+    state.page = ALL_PAGES.find((page) => page.path === event.target.value) || state.page;
+    state.drafts.clear();
+    document.querySelector('#page-title').textContent = state.page.label;
+    document.querySelector('#view-page').href = pageUrl(state.page.path);
+    await loadPage(state.page.path);
+  });
+
   document.querySelector('#field-search').addEventListener('input', (event) => {
     state.search = event.target.value.toLowerCase().trim();
     renderFields();
@@ -337,7 +348,14 @@ async function loadPage(path) {
     if (contentResponse.error) throw contentResponse.error;
 
     const source = new DOMParser().parseFromString(await htmlResponse.text(), 'text/html');
-    state.fields = collectCmsFields(source, path);
+    state.fields = collectCmsFields(source, path).filter((field) => {
+      if (field.type !== 'image') return false;
+      const element = field.element;
+      if (!element) return false;
+      if (element.closest('nav, footer')) return false;
+      if (element.matches('.logo, .footer-logo')) return false;
+      return true;
+    });
     state.overrides = new Map((contentResponse.data || []).map((record) => [record.content_key, record]));
     state.drafts.clear();
     state.loadingPage = false;
@@ -404,7 +422,7 @@ function renderFields() {
 
   const fields = filteredFields();
   if (!fields.length) {
-    container.innerHTML = `<div class="empty-state"><strong>No matching content</strong><p>Try another filter or clear the search.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><strong>No editable photos on this page</strong><p>This page currently uses design elements or shared branding only.</p></div>`;
     return;
   }
 
