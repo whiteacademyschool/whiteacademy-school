@@ -6056,5 +6056,10 @@ body[data-media-page] .nav-links { gap: 18px; font-size: 12px; }
   border: 3px solid rgba(74,69,212,.15);
   border-top-color: var(--violet);
   border-radius: 50%;
-  animation: admin-spin .8s linear infinite;
+  animation: staff-spin .8s linear infinite;
+}
+
+
+@keyframes staff-spin {
+  to { transform: rotate(360deg); }
 }
