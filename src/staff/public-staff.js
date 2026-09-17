@@ -60,3 +60,10 @@ async function loadStaff() {
 }
 
 loadStaff();
+
+if (cmsConfigured && cmsClient) {
+  cmsClient
+    .channel('public-staff-directory')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'staff_members' }, loadStaff)
+    .subscribe();
+}
