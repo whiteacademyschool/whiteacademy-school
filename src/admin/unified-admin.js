@@ -13,6 +13,7 @@ const modules = {
   staff: { label: 'Our Staff', icon: 'S', description: 'Manage staff profiles and photos' },
   events: { label: 'Events', icon: 'E', description: 'Create albums and upload event photos' },
   news: { label: 'News & Updates', icon: 'N', description: 'Publish school announcements' },
+  disclosures: { label: 'Mandatory PDFs', icon: 'P', description: 'Upload official disclosure documents' },
   navigation: { label: 'Navigation', icon: 'M', description: 'Manage the global website menu' },
 };
 const requestedModule = location.hash.replace('#', '');
@@ -41,7 +42,7 @@ function renderSetup() {
 }
 
 function renderLogin(message = '') {
-  app.innerHTML = '<main class="login-screen"><section class="login-visual"><div class="login-visual__content"><div class="brand-lockup brand-lockup--light"><span>WA</span><div><strong>White Academy</strong><small>School administration</small></div></div><div><p class="eyebrow">ONE ADMIN PANEL</p><h1>Simple, focused<br>and organized.</h1><p>Manage page images, staff, events, news and the website menu from one secure place.</p></div><small>Authorized administrator access only</small></div></section><section class="login-panel"><form id="login-form" class="login-card"><p class="eyebrow">WELCOME BACK</p><h2>Sign in to White Academy</h2><p>Use the school administrator account.</p>' +
+  app.innerHTML = '<main class="login-screen"><section class="login-visual"><div class="login-visual__content"><div class="brand-lockup brand-lockup--light"><span>WA</span><div><strong>White Academy</strong><small>School administration</small></div></div><div><p class="eyebrow">ONE ADMIN PANEL</p><h1>Simple, focused<br>and organized.</h1><p>Manage page images, staff, events, news, mandatory PDFs and the website menu from one secure place.</p></div><small>Authorized administrator access only</small></div></section><section class="login-panel"><form id="login-form" class="login-card"><p class="eyebrow">WELCOME BACK</p><h2>Sign in to White Academy</h2><p>Use the school administrator account.</p>' +
     (message ? '<div class="form-alert">' + escapeHtml(message) + '</div>' : '') +
     '<label>Email address<input name="email" type="email" autocomplete="username" required value="whiteschoolacademyweb@gmail.com"></label><label>Password<input name="password" type="password" autocomplete="current-password" required placeholder="Enter your password"></label><button class="primary-action" type="submit">Open admin panel</button><a class="back-link" href="/">← Back to website</a></form></section></main>';
   document.querySelector('#login-form').addEventListener('submit', handleLogin);
@@ -102,6 +103,7 @@ function moduleUrl(id) {
   if (id === 'staff') return '/staff-admin.html?embedded=1';
   if (id === 'events') return '/media-admin.html?embedded=1#events';
   if (id === 'news') return '/media-admin.html?embedded=1#news';
+  if (id === 'disclosures') return '/disclosure-admin.html?embedded=1';
   return '';
 }
 
