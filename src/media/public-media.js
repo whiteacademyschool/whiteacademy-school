@@ -107,4 +107,20 @@ async function boot() {
   }
 }
 
+function subscribeToUpdates() {
+  if (!cmsConfigured || !cmsClient || !root) return;
+  const tables = page === 'gallery' || page === 'event-detail'
+    ? ['event_albums', 'event_photos']
+    : ['news_posts', 'news_photos'];
+  const channel = cmsClient.channel('public-media-' + page);
+  tables.forEach((table) => {
+    channel.on('postgres_changes', { event: '*', schema: 'public', table }, () => {
+      window.clearTimeout(subscribeToUpdates.timer);
+      subscribeToUpdates.timer = window.setTimeout(boot, 200);
+    });
+  });
+  channel.subscribe();
+}
+
 boot();
+subscribeToUpdates();
