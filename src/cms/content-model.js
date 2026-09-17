@@ -103,6 +103,37 @@ function makeImageField(image, pagePath, position) {
   };
 }
 
+function makePlaceholderImageField(element, pagePath, position) {
+  const originalText = cleanText(element.textContent);
+  const value = element.dataset.cmsImage || '';
+
+  return {
+    pagePath,
+    key: `image:${getElementPath(element)}`,
+    type: 'image',
+    value,
+    originalValue: value,
+    metadata: { alt: originalText || `Image ${position}`, placeholder: true },
+    originalMetadata: { alt: originalText || `Image ${position}`, placeholder: true },
+    label: originalText || `Image ${position}`,
+    section: getSectionLabel(element),
+    element,
+    apply(nextValue) {
+      if (nextValue) {
+        element.dataset.cmsImage = nextValue;
+        element.style.backgroundImage = `url("${String(nextValue).replaceAll('"', '%22')}")`;
+        element.classList.add('cms-image-slot');
+        element.textContent = '';
+      } else {
+        delete element.dataset.cmsImage;
+        element.style.removeProperty('background-image');
+        element.classList.remove('cms-image-slot');
+        element.textContent = originalText;
+      }
+    },
+  };
+}
+
 function makeLinkField(link, pagePath, position) {
   const value = link.getAttribute('href') || '';
   const label = cleanText(link.textContent) || link.getAttribute('aria-label') || `Link ${position}`;
@@ -190,9 +221,17 @@ export function collectCmsFields(document, pagePath = normalizePagePath()) {
     textNode = walker.nextNode();
   }
 
-  const imageFields = Array.from(
+  const standardImages = Array.from(
     document.querySelectorAll('img:not([data-cms-ignore])'),
   ).map((image, index) => makeImageField(image, pagePath, index + 1));
+
+  const placeholderImages = Array.from(
+    document.querySelectorAll('.asset-slot:not([data-cms-ignore])'),
+  ).map((element, index) =>
+    makePlaceholderImageField(element, pagePath, standardImages.length + index + 1),
+  );
+
+  const imageFields = [...standardImages, ...placeholderImages];
 
   const linkFields = Array.from(
     document.querySelectorAll('a[href]:not([data-cms-ignore])'),
