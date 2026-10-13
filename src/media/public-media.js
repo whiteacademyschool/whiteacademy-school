@@ -9,7 +9,8 @@ function escapeHtml(value = '') {
 
 function formatDate(value) {
   if (!value) return '';
-  return new Intl.DateTimeFormat('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(value));
+  const normalized = /^\d{4}-\d{2}-\d{2}$/.test(value) ? `${value}T00:00:00` : value;
+  return new Intl.DateTimeFormat('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(normalized));
 }
 
 function emptyState(title, message) {
@@ -17,7 +18,8 @@ function emptyState(title, message) {
 }
 
 function eventCard(album) {
-  return `<a class="public-media-card" href="/gallery-event.html?id=${encodeURIComponent(album.id)}"><div class="public-media-card__image">${album.cover_image_url ? `<img src="${escapeHtml(album.cover_image_url)}" alt="${escapeHtml(album.title)}" loading="lazy">` : '<span>WA</span>'}</div><div class="public-media-card__body"><p>${formatDate(album.event_date)}</p><h2>${escapeHtml(album.title)}</h2><span>${escapeHtml(album.description || 'View event photographs')}</span><strong>View album →</strong></div></a>`;
+  const title = album.title || 'White Academy event';
+  return `<a class="public-media-card" href="/gallery-event.html?id=${encodeURIComponent(album.id)}" aria-label="View ${escapeHtml(title)} event album"><div class="public-media-card__image">${album.cover_image_url ? `<img src="${escapeHtml(album.cover_image_url)}" alt="${escapeHtml(title)} at White Academy" loading="lazy" width="720" height="450">` : '<span>WA</span>'}</div><div class="public-media-card__body"><p>${formatDate(album.event_date) || 'White Academy'}</p><h2>${escapeHtml(title)}</h2><span>${escapeHtml(album.description || 'Photographs from this school event.')}</span><strong>View photographs →</strong></div></a>`;
 }
 
 function newsCard(post) {
@@ -66,9 +68,13 @@ async function loadEventDetail() {
   document.querySelector('[data-detail-title]').textContent = album.title;
   document.querySelector('[data-detail-date]').textContent = formatDate(album.event_date);
   document.querySelector('[data-detail-description]').textContent = album.description || 'Moments from White Academy.';
-  const allPhotos = album.cover_image_url ? [{ id: 'cover', image_url: album.cover_image_url, caption: album.title }, ...(photos || [])] : photos || [];
+  const metaDescription = document.querySelector('meta[name="description"]') || document.head.appendChild(document.createElement('meta'));
+  metaDescription.setAttribute('name', 'description');
+  metaDescription.setAttribute('content', album.description || `View photographs from ${album.title} at White Academy.`);
+  const uniquePhotos = (photos || []).filter((photo) => photo.image_url !== album.cover_image_url);
+  const allPhotos = album.cover_image_url ? [{ id: 'cover', image_url: album.cover_image_url, caption: album.title }, ...uniquePhotos] : uniquePhotos;
   if (!allPhotos.length) return emptyState('Photos coming soon', 'This event album has been created and photographs will be added shortly.');
-  root.innerHTML = `<div class="event-photo-grid">${allPhotos.map((photo) => `<button data-lightbox><img src="${escapeHtml(photo.image_url)}" alt="${escapeHtml(photo.caption || album.title)}" loading="lazy"></button>`).join('')}</div>`;
+  root.innerHTML = `<div class="event-photo-grid">${allPhotos.map((photo, index) => `<button data-lightbox type="button" aria-label="Open photograph ${index + 1} of ${allPhotos.length}"><img src="${escapeHtml(photo.image_url)}" alt="${escapeHtml(photo.caption || `${album.title} at White Academy`)}" loading="lazy" width="800" height="600"></button>`).join('')}</div>`;
   addLightbox();
 }
 

@@ -5937,14 +5937,26 @@ body[data-media-page] .nav-links { gap: 18px; font-size: 12px; }
 .media-switch a { min-height: 42px; padding: 0 19px; display: grid; place-items: center; border-radius: 999px; color: #667085; font-size: 12px; font-weight: 900; }
 .media-switch a.is-active { color: white; background: var(--deep); }
 .public-media-section { min-height: 430px; padding: 70px 0 100px; background: #fbfcff; }
+.media-hero--gallery { padding: 34px 0 30px; border-bottom: 1px solid var(--line); background: linear-gradient(135deg, #f7f8ff, #fff); }
+.media-hero--gallery .container { max-width: var(--container); display: flex; align-items: center; justify-content: space-between; gap: 40px; text-align: left; }
+.media-hero--gallery .media-hero__copy { min-width: 0; }
+.media-hero--gallery .eyebrow { margin: 0 0 8px; }
+.media-hero--gallery h1 { margin: 0 0 7px; font-size: clamp(34px, 4vw, 48px); line-height: 1.08; }
+.media-hero--gallery .media-hero__copy > p:last-child { max-width: none; margin: 0; font-size: 14px; line-height: 1.55; }
+.media-hero--gallery .media-switch { flex: 0 0 auto; margin: 0; }
+.public-media-section--gallery { min-height: 360px; padding: 34px 0 86px; }
+.public-media-heading { margin-bottom: 20px; display: flex; align-items: end; justify-content: space-between; gap: 24px; }
+.public-media-heading .eyebrow { margin: 0 0 6px; }
+.public-media-heading h2 { margin: 0; color: var(--deep); font: 800 30px/1.15 "Playfair Display", serif; }
+.public-media-heading > p { margin: 0; color: var(--muted); font-size: 13px; }
 .public-media-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 .public-media-card { overflow: hidden; border: 1px solid var(--line); border-radius: 22px; background: white; box-shadow: 0 16px 44px rgba(7,20,61,.07); transition: transform .25s ease, box-shadow .25s ease; }
 .public-media-card:hover { transform: translateY(-5px); box-shadow: 0 24px 60px rgba(7,20,61,.12); }
-.public-media-card__image { height: 240px; display: grid; place-items: center; color: #8b8ad3; background: linear-gradient(145deg, #efefff, #f8f8ff); }
+.public-media-card__image { height: auto; aspect-ratio: 16 / 10; display: grid; place-items: center; overflow: hidden; color: #8b8ad3; background: linear-gradient(145deg, #efefff, #f8f8ff); }
 .public-media-card--news .public-media-card__image { color: #55a789; background: linear-gradient(145deg, #e9f7f1, #f7fcfa); }
 .public-media-card__image img { width: 100%; height: 100%; object-fit: cover; }
 .public-media-card__image > span { font: 900 38px "Playfair Display", serif; }
-.public-media-card__body { min-height: 220px; padding: 25px; display: flex; flex-direction: column; }
+.public-media-card__body { min-height: 180px; padding: 22px; display: flex; flex-direction: column; }
 .public-media-card__body p { margin: 0 0 9px; color: var(--violet); font-size: 10px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
 .public-media-card__body h2 { margin: 0 0 10px; font: 800 23px/1.23 "Playfair Display", serif; }
 .public-media-card__body > span { display: -webkit-box; overflow: hidden; color: var(--muted); font-size: 13px; line-height: 1.65; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
@@ -5961,6 +5973,12 @@ body[data-media-page] .nav-links { gap: 18px; font-size: 12px; }
 .media-detail-hero p { margin: 0 0 10px; color: #aaa8ff; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .09em; }
 .media-detail-hero h1 { max-width: 850px; margin: 0 0 15px; font: 800 clamp(40px, 5.3vw, 68px)/1.05 "Playfair Display", serif; }
 .media-detail-hero span { color: rgba(255,255,255,.7); font-size: 16px; line-height: 1.75; }
+.media-detail-hero--event { padding: 34px 0 30px; }
+.media-detail-hero--event .container { max-width: var(--container); display: grid; grid-template-columns: 150px minmax(0, 1fr); align-items: start; gap: 28px; }
+.media-detail-hero--event a { margin: 9px 0 0; }
+.media-detail-hero--event h1 { max-width: none; margin-bottom: 8px; font-size: clamp(34px, 4vw, 50px); }
+.media-detail-hero--event span { display: block; max-width: 760px; font-size: 14px; line-height: 1.6; }
+.public-media-section--event { min-height: 360px; padding: 34px 0 86px; }
 .event-photo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-flow: dense; gap: 14px; }
 .event-photo-grid button, .news-photo-grid button { overflow: hidden; padding: 0; border: 0; border-radius: 15px; background: #eef0f6; cursor: zoom-in; }
 .event-photo-grid button { aspect-ratio: 4 / 3; }
@@ -5995,13 +6013,27 @@ body[data-media-page] .nav-links { gap: 18px; font-size: 12px; }
   .media-hero .container > p:last-of-type { font-size: 14px; }
   .media-switch { width: 100%; }
   .media-switch a { flex: 1; padding: 0 11px; }
+  .media-hero--gallery { padding: 26px 0 24px; }
+  .media-hero--gallery .container { align-items: stretch; flex-direction: column; gap: 18px; text-align: left; }
+  .media-hero--gallery h1 { font-size: 34px; }
+  .media-hero--gallery .media-switch { width: 100%; }
   .public-media-section { padding: 38px 0 76px; }
+  .public-media-section--gallery { padding-top: 26px; }
+  .public-media-heading { align-items: flex-start; flex-direction: column; gap: 5px; }
+  .public-media-heading h2 { font-size: 27px; }
   .public-media-grid { grid-template-columns: 1fr; gap: 18px; }
-  .public-media-card__image { height: 215px; }
+  .public-media-card__image { height: auto; }
   .public-media-card__body { min-height: 190px; padding: 21px; }
   .media-detail-hero { padding: 50px 0 42px; }
+  .media-detail-hero--event { padding: 26px 0 24px; }
+  .media-detail-hero--event .container { grid-template-columns: 1fr; gap: 16px; }
+  .media-detail-hero--event a { margin: 0; }
+  .media-detail-hero--event h1 { font-size: 36px; }
   .media-detail-hero a { margin-bottom: 28px; }
+  .media-detail-hero--event a { margin-bottom: 0; }
   .media-detail-hero h1 { font-size: 39px; }
+  .media-detail-hero--event h1 { font-size: 36px; }
+  .public-media-section--event { padding-top: 24px; }
   .event-photo-grid { gap: 8px; }
   .event-photo-grid button { border-radius: 9px; }
   .event-photo-grid button:nth-child(7n + 1) { grid-column: span 2; grid-row: span 1; aspect-ratio: 16 / 10; }
