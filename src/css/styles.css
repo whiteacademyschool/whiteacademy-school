@@ -5926,7 +5926,7 @@ body[data-media-page] .nav-links { gap: 18px; font-size: 12px; }
 }
 
 .media-hero--news {
-  background: radial-gradient(circle at 78% 20%, rgba(67,179,143,.16), transparent 30%), linear-gradient(135deg, #f4fbf8, #fff);
+  background: linear-gradient(135deg, #f7f8ff, #fff);
 }
 
 .media-hero .container { max-width: 900px; text-align: center; }
