@@ -6165,6 +6165,19 @@ body[data-media-page] .nav-links { gap: 18px; font-size: 12px; }
   stroke: none !important;
 }
 
+.float-buttons .wa svg path:first-child {
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.65 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+.float-buttons .wa svg path:last-child {
+  fill: currentColor !important;
+  stroke: none !important;
+}
+
 .float-buttons a::before {
   content: attr(data-label);
   position: absolute;
